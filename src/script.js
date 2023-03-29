@@ -80,7 +80,7 @@ function startStop() {
   } else {
     const bpm = parseInt(bpmInput.value);
     const beatsPerMeasure = parseInt(timeSignatureInput.value.split('/')[0]);
-    if (bpm >= 30 && bpm <= 250) {
+    if (bpm >= 30 && bpm <= 300) {
       var tickSound = document.getElementById("tick-sound").value;
       var tickSoundArr = tickSound.split("|");
       document.getElementById("strongBeat").src = tickSoundArr[0];
@@ -91,8 +91,8 @@ function startStop() {
         beatsPerMeasure: beatsPerMeasure,
         bpm: bpm,
       });
+      startStopBtn.innerText = 'Stop';
     }
-    startStopBtn.innerText = 'Stop';
     beatsPerBar = beatsPerMeasure;
   }
 }
@@ -133,7 +133,7 @@ tempoTapperBtn.addEventListener('click', () => {
     if (taps.length > 5) {
       taps.shift();
     }
-    const averageBpm = Math.min(Math.round(taps.reduce((a, b) => a + b) / taps.length), 250);
+    const averageBpm = Math.min(Math.round(taps.reduce((a, b) => a + b) / taps.length), 300);
     bpmInput.value = averageBpm;
   }
   previousTapTime = currentTime;

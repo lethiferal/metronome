@@ -23,11 +23,11 @@ self.addEventListener('message', (event) => {
         if (timeDifference > 2) {
           tickAdjustment = 1;
         } else if (timeDifference > 0) {
-          tickAdjustment = timeDifference;
+          tickAdjustment = timeDifference / 5;
         } else if (timeDifference < -2) {
           tickAdjustment = -1;
         } else if (timeDifference < 0) {
-          tickAdjustment = timeDifference;
+          tickAdjustment = timeDifference / 5;
         }
         intervalMs = Math.round(intervalMs + tickAdjustment);
         if (intervalMs < 10) {
@@ -47,8 +47,11 @@ self.addEventListener('message', (event) => {
       if (averageIntervalTime < calculateIntervalTime - 1 || averageIntervalTime > calculateIntervalTime + 1) {
         intervalMs += calculateIntervalTime - averageIntervalTime;
         totalIntervalTime = intervalMs * intervalCount;
+        console.group("[Worker] Latency detected, adjusting...");
+        console.log("Tick played at: " + previousTickTime);
+        console.log("Average Interval: " + averageIntervalTime.toFixed(2));
+        console.groupEnd("[Worker] Latency detected, adjusting...");
       }
-      console.info("[Worker] Tick played at: " + previousTickTime + " Average Interval: " + averageIntervalTime.toFixed(2));
     }, intervalMs);
     beatsPerBar = beatsPerMeasure;
   } else if (event.data.type === 'stop') {
