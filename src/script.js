@@ -1,19 +1,20 @@
-const display = document.getElementById('display');
-const startStopBtn = document.getElementById('startStopBtn');
-const bpmInput = document.getElementById('bpm');
-const timeSignatureInput = document.getElementById('time-signature');
-const tickSound = document.getElementById('tick-sound');
-const tempoTapperBtn = document.getElementById('tempoTapperBtn');
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const timeSignatureInput = document.getElementById('time-signature');
+const tempoTapperBtn = document.getElementById('tempoTapperBtn');
+const startStopBtn = document.getElementById('startStopBtn');
+const tickSound = document.getElementById('tick-sound');
+const display = document.getElementById('display');
+const bpmInput = document.getElementById('bpm');
 const worker = new Worker('src/worker.js');
 
-let isPlaying = false;
-let previousTapTime = 0;
 let taps = [];
-let strongBeatSound;
-let weakerBeatSound;
+let debounceTimer;
 let strongBeatPath;
 let weakerBeatPath;
+let strongBeatSound;
+let weakerBeatSound;
+let isPlaying = false;
+let previousTapTime = 0;
 
 tickSound.addEventListener('change', () => {
   if (isPlaying) {
@@ -138,7 +139,16 @@ tempoTapperBtn.addEventListener('click', () => {
   previousTapTime = currentTime;
 });
 
-bpmInput.addEventListener('input', handleInputChangeRestart);
-timeSignatureInput.addEventListener('input', handleInputChangeRestart);
+function debounce(func, delay) {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(func, delay);
+}
+
+startStopBtn.addEventListener('click',  function() {
+  debounce(startStop, 500);
+});
+bpmInput.addEventListener('input', function() {
+  debounce(handleInputChangeRestart, 500);
+});
 tempoTapperBtn.addEventListener('click', handleInputChangeStop);
-startStopBtn.addEventListener('click', startStop);
+timeSignatureInput.addEventListener('input', handleInputChangeRestart);
