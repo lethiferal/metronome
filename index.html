@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Metronome</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="metronome">
+      <button id="startStopBtn">Start</button>
+      <button id="tempoTapperBtn">Tap</button>
+      <input type="number" id="bpm" min="30" max="250" value="120">
+      <select id="time-signature">
+        <option value="2/4">2/4</option>
+        <option value="3/4">3/4</option>
+        <option value="4/4" selected="">4/4</option>
+        <option value="5/4">5/4</option>
+        <option value="6/4">6/4</option>
+        <option value="7/8">7/8</option>
+        <option value="12/8">12/8</option>
+      </select>
+      <select id="tick-sound">
+        <option value="./assets/ping_sb.wav|./assets/ping_wb.wav" selected="">Ping</option>
+        <option value="./assets/tick_sb.wav|./assets/tick_wb.wav">Tick</option>
+        <option value="./assets/rim_sb.wav|./assets/rim_wb.wav">Rim</option>
+        <option value="./assets/drip_sb.wav|./assets/drip_wb.wav">Drip</option>
+        <option value="./assets/wood_sb.wav|./assets/wood_wb.wav">Wood</option>
+      </select>
+    </div>
+    <audio id="strongBeat" src="./assets/ping_sb.wav" preload="auto"></audio>
+    <audio id="weakerBeat" src="./assets/ping_wb.wav" preload="auto"></audio>
+    <script src="src/script.js"></script>
+  </body>
+</html>
