@@ -17,7 +17,7 @@ jobs:
         npm install html-minifier -g
     - name: Build
       run: |
-        terser src/*.js --compress --mangle -o [name].js
+        for i in ./src/*.js; do terser $i --compress -o $i; done
         csso style.css -o style.css
         html-minifier --collapse-boolean-attributes --collapse-whitespace --minify-css --minify-js --minify-urls --remove-attribute-quotes --remove-comments --remove-empty-attributes --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --remove-tag-whitespace --use-short-doctype -o index.html index.html
     - name: Deploy
